@@ -18,8 +18,7 @@ module ArethusaPluginGenerator
       @namespace = options[:namespace] || 'arethusa'
 
       create_directories
-      create_html_template
-      create_service
+      create_files
 
       puts
       say_status(:success, "Created #{namespaced_name}")
@@ -35,8 +34,13 @@ module ArethusaPluginGenerator
         DIRECTORIES.each { |dir| empty_directory(send(dir)) }
       end
 
+      def create_files
+        create_service
+        create_html_template
+      end
+
       def create_service
-        template('templates/service.tt', template_dir("#{name}.js"))
+        template('templates/service.tt', plugin_dir("#{name}.js"))
       end
 
       def create_html_template
