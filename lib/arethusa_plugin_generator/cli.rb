@@ -44,11 +44,21 @@ module ArethusaPluginGenerator
         template('templates/service.tt', plugin_dir("#{name}.js"))
       end
 
+        create_module
+        create_module
       def create_html_template
         template('templates/html_template.tt', html_template_file)
       end
+      def create_module
+        template('templates/module.tt', js_dir("#{namespaced_name}.js"))
+      end
+
 
       def give_conf_instructions
+      def create_module
+        template('templates/module.tt', js_dir("#{namespaced_name}.js"))
+      end
+
         text = <<-EOF
 Now add your new #{name} plugin to a conf file and add a configuration for it.
 It could look like this:
