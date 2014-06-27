@@ -22,6 +22,7 @@ module ArethusaPluginGenerator
 
       puts
       say_status(:success, "Created #{namespaced_name}")
+      give_conf_instructions
     end
 
     no_commands do
@@ -44,7 +45,20 @@ module ArethusaPluginGenerator
       end
 
       def create_html_template
-        template('templates/html_template.tt', template_dir("#{name}.html"))
+        template('templates/html_template.tt', html_template_file)
+      end
+
+      def give_conf_instructions
+        text = <<-EOF
+Now add your new #{name} plugin to a conf file and add a configuration for it.
+It could look like this:
+
+ "#{name}" : {
+   "name" : "#{name}",
+   "template" : #{html_template_file.slice(/template.*/)}
+ }
+        EOF
+        puts text.lines.map { |line| "\t#{line}" }.join
       end
 
       def plugin_dir(file = '')
@@ -53,6 +67,10 @@ module ArethusaPluginGenerator
 
       def template_dir(file = '')
         File.join(temp_dir, namespaced_name, file)
+      end
+
+      def html_template_file
+        template_dir("#{name}.html")
       end
 
       def js_dir
