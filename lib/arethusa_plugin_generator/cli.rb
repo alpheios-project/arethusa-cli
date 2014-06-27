@@ -11,13 +11,13 @@ module ArethusaPluginGenerator
     end
 
     desc 'new', 'Creates a new Arethusa plugin skeleton'
-    method_option :namespace, aliases: '-n',
+    method_option :namespace, aliases: '-n', default: 'arethusa',
       desc: 'Namespace of the new plugin'
     method_option :commit, type: :boolean, aliases: '-c',
       desc: 'Commit the skeleton with git'
     def new(name)
       @name = name
-      @namespace = options[:namespace] || 'arethusa'
+      @namespace = options[:namespace]
 
       create_directories
       create_files
