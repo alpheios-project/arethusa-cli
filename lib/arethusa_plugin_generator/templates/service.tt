@@ -7,7 +7,7 @@ angular.module('<%= namespaced_name %>').service('<%= name %>', [
     var self = this;
 
     function configure() {
-      configurator.getConfAndDelegate('<%= name %>');
+      configurator.getConfAndDelegate('<%= name %>', self);
     }
 
     configure();
