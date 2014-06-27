@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["LFDM"]
   spec.email         = ["1986gh@gmail.com"]
   spec.summary       = %q{Generates a skeleton for an Arethusa plugin}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.description   = spec.summary
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "simplecov", "~> 0.7"
+  spec.add_dependency "thor"
 end
