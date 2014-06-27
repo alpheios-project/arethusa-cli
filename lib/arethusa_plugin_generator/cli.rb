@@ -20,9 +20,8 @@ module ArethusaPluginGenerator
       create_directories
       create_files
 
-      puts
-      say_status('trying', "to insert module into arethusa", :yellow)
-      add_module
+      try('insert module into arethusa', :add_module)
+      try('add module to index.html', :add_to_index)
 
       puts
       say_status(:success, "Created #{namespaced_name}")
@@ -30,6 +29,12 @@ module ArethusaPluginGenerator
     end
 
     no_commands do
+      def try(message, method)
+        puts
+        say_status('trying', "to #{message}...", :yellow)
+        send(method)
+      end
+
       def namespaced_name
         [namespace, name].compact.join('.')
       end
