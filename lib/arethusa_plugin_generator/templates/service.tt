@@ -1,0 +1,19 @@
+"use strict";
+
+angular.module('<%= namespaced_name %>').service('<%= name %>', [
+  'state',
+  'configurator',
+  function(state, configurator) {
+    var self = this;
+
+    function configure() {
+      configurator.getConfAndDelegate('<%= name %>');
+    }
+
+    configure();
+
+    this.init = function() {
+      configure();
+    };
+  }
+]);
