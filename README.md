@@ -26,6 +26,13 @@ then run
 
 This will create all files and make all changes you need to get started with your plugin.Also check out `arethusa_plugin_generator help new` to learn about additional options.
 
+
+## Disclaimer
+
+Make sure you're running the latest version of this gem at all times. It
+might change frequently, as Arethusa is continuing to make progress.
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/arethusa_plugin_generator/fork )
