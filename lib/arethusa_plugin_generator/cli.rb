@@ -6,6 +6,10 @@ module ArethusaPluginGenerator
 
     attr_reader :namespace, :name
 
+    def self.source_root
+      File.dirname(__FILE__)
+    end
+
     desc 'new', 'Creates a new Arethusa plugin skeleton'
     method_option :namespace, aliases: '-n',
       desc: 'Namespace of the new plugin'
@@ -14,6 +18,7 @@ module ArethusaPluginGenerator
       @namespace = options[:namespace] || 'arethusa'
 
       create_directories
+      create_html_template
 
       puts
       say_status(:success, "Created #{namespaced_name}")
@@ -29,12 +34,16 @@ module ArethusaPluginGenerator
         DIRECTORIES.each { |dir| empty_directory(send(dir)) }
       end
 
-      def plugin_dir
-        File.join(js_dir, namespaced_name)
+      def create_html_template
+        template('templates/html_template.tt', template_dir("#{name}.html"))
       end
 
-      def template_dir
-        File.join(temp_dir, namespaced_name)
+      def plugin_dir(file = '')
+        File.join(js_dir, namespaced_name, file)
+      end
+
+      def template_dir(file = '')
+        File.join(temp_dir, namespaced_name, file)
       end
 
       def js_dir
