@@ -21,8 +21,12 @@ module ArethusaPluginGenerator
       create_files
 
       puts
+      say_status('trying', "to insert module into arethusa", :yellow)
+      add_module
+
+      puts
       say_status(:success, "Created #{namespaced_name}")
-      give_conf_instructions
+      #give_conf_instructions
     end
 
     no_commands do
@@ -36,29 +40,34 @@ module ArethusaPluginGenerator
       end
 
       def create_files
+        create_module
         create_service
         create_html_template
+      end
+
+      def create_module
+        template('templates/module.tt', js_dir("#{namespaced_name}.js"))
       end
 
       def create_service
         template('templates/service.tt', plugin_dir("#{name}.js"))
       end
 
-        create_module
-        create_module
       def create_html_template
         template('templates/html_template.tt', html_template_file)
       end
-      def create_module
-        template('templates/module.tt', js_dir("#{namespaced_name}.js"))
+
+      def add_module
+        insert_into_file(arethusa_main, before: /\n\]/, force: false) do
+          ",\n  '#{namespaced_name}'"
+        end
       end
 
+      def arethusa_main
+        js_dir('arethusa.js')
+      end
 
       def give_conf_instructions
-      def create_module
-        template('templates/module.tt', js_dir("#{namespaced_name}.js"))
-      end
-
         text = <<-EOF
 Now add your new #{name} plugin to a conf file and add a configuration for it.
 It could look like this:
@@ -83,8 +92,8 @@ It could look like this:
         template_dir("#{name}.html")
       end
 
-      def js_dir
-        File.join(destination_root, 'app/js')
+      def js_dir(file = '')
+        File.join(destination_root, 'app/js', file)
       end
 
       def temp_dir
