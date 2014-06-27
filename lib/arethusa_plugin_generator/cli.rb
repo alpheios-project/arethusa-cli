@@ -72,6 +72,16 @@ module ArethusaPluginGenerator
         js_dir('arethusa.js')
       end
 
+      def add_to_index
+        insert_into_file(index_file, after: /script.*?core.*?script>\n/) do
+          %{  <script src="../dist/#{namespaced_name}.min.js"></script>\n}
+        end
+      end
+
+      def index_file
+        File.join(destination_root, 'app', 'index.html')
+      end
+
       def give_conf_instructions
         text = <<-EOF
 Now add your new #{name} plugin to a conf file and add a configuration for it.
