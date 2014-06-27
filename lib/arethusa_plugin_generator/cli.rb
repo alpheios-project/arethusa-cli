@@ -107,7 +107,7 @@ It could look like this:
 
  "#{name}" : {
    "name" : "#{name}",
-   "template" : #{html_template_file.slice(/template.*/)}
+   "template" : "#{html_template_file.slice(/template.*/)}"
  }
         EOF
         puts text.lines.map { |line| "\t#{line}" }.join
