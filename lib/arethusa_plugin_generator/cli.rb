@@ -21,11 +21,12 @@ module ArethusaPluginGenerator
       create_files
 
       try('insert module into arethusa', :add_module)
+      try('add minification routine', :add_minification)
       try('add module to index.html', :add_to_index)
 
       puts
       say_status(:success, "Created #{namespaced_name}")
-      #give_conf_instructions
+      give_conf_instructions
     end
 
     no_commands do
@@ -70,6 +71,20 @@ module ArethusaPluginGenerator
 
       def arethusa_main
         js_dir('arethusa.js')
+      end
+
+      def add_minification
+        insert_into_file(gruntfile, after: /pluginFiles\(.*?core.*?\).*?\n/, force: false) do
+          %[      #{name}: { files: pluginFiles('#{namespaced_name}') },\n]
+        end
+
+        insert_into_file(gruntfile, after: /registerTask.*?minify.*?\n/, force: false) do
+          %{    'uglify:#{name}',\n}
+        end
+      end
+
+      def gruntfile
+        File.join(destination_root, 'Gruntfile.js')
       end
 
       def add_to_index
