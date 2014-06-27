@@ -13,6 +13,8 @@ module ArethusaPluginGenerator
     desc 'new', 'Creates a new Arethusa plugin skeleton'
     method_option :namespace, aliases: '-n',
       desc: 'Namespace of the new plugin'
+    method_option :commit, type: :boolean, aliases: '-c',
+      desc: 'Commit the skeleton with git'
     def new(name)
       @name = name
       @namespace = options[:namespace] || 'arethusa'
@@ -24,6 +26,8 @@ module ArethusaPluginGenerator
       try('add minification routine', :add_minification)
       try('add minification task', :add_minification_task)
       try('add module to index.html', :add_to_index)
+
+      commit_changes if options[:commit]
 
       puts
       say_status(:success, "Created #{namespaced_name}")
@@ -131,6 +135,15 @@ It could look like this:
 
       def temp_dir
         File.join(destination_root, 'app/templates')
+      end
+
+      def commit_changes
+        message = %{"Add skeleton for #{namespaced_name}"}
+        `git add -A`
+        `git commit -m #{message}`
+        sha = `git rev-parse --short HEAD`.chomp
+        puts
+        say_status(:commited, %(#{sha} #{message}))
       end
     end
   end
