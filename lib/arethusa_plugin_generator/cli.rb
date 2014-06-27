@@ -22,6 +22,7 @@ module ArethusaPluginGenerator
 
       try('insert module into arethusa', :add_module)
       try('add minification routine', :add_minification)
+      try('add minification task', :add_minification_task)
       try('add module to index.html', :add_to_index)
 
       puts
@@ -77,7 +78,9 @@ module ArethusaPluginGenerator
         insert_into_file(gruntfile, after: /pluginFiles\(.*?core.*?\).*?\n/, force: false) do
           %[      #{name}: { files: pluginFiles('#{namespaced_name}') },\n]
         end
+      end
 
+      def add_minification_task
         insert_into_file(gruntfile, after: /registerTask.*?minify.*?\n/, force: false) do
           %{    'uglify:#{name}',\n}
         end
