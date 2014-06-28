@@ -2,10 +2,6 @@ require 'thor'
 
 module ArethusaCLI
   class Generator < Thor
-    include Thor::Actions
-
-    attr_reader :namespace, :name
-
     namespace :generate
 
     def self.source_root
@@ -16,7 +12,10 @@ module ArethusaCLI
       "#{basename} #{@namespace} #{command.usage}"
     end
 
-    desc 'plugin [NAME]', 'Creates a new Arethusa plugin skeleton'
+    include Thor::Actions
+    attr_reader :namespace, :name
+
+    desc 'plugin NAME', 'Creates a new Arethusa plugin skeleton'
     method_option :namespace, aliases: '-n', default: 'arethusa',
       desc: 'Namespace of the new plugin'
     method_option :commit, type: :boolean, aliases: '-c',
