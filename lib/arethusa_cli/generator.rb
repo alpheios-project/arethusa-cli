@@ -1,13 +1,19 @@
 require 'thor'
 
 module ArethusaCLI
-  class Generate < Thor
+  class Generator < Thor
     include Thor::Actions
 
     attr_reader :namespace, :name
 
+    namespace :generate
+
     def self.source_root
       File.dirname(__FILE__)
+    end
+
+    def self.banner(command, namespace = nil, subcommand = false)
+      "#{basename} #{@namespace} #{command.usage}"
     end
 
     desc 'plugin [NAME]', 'Creates a new Arethusa plugin skeleton'
@@ -15,7 +21,7 @@ module ArethusaCLI
       desc: 'Namespace of the new plugin'
     method_option :commit, type: :boolean, aliases: '-c',
       desc: 'Commit the skeleton with git'
-    def new(name)
+    def plugin(name)
       @name = name
       @namespace = options[:namespace]
 
