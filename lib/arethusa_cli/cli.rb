@@ -1,6 +1,6 @@
 require 'thor'
 
-module ArethusaPluginGenerator
+module ArethusaCLI
   class CLI < Thor
     include Thor::Actions
 

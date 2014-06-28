@@ -1,14 +1,14 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'arethusa_plugin_generator/version'
+require 'arethusa_cli/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "arethusa_plugin_generator"
-  spec.version       = ArethusaPluginGenerator::VERSION
+  spec.name          = "arethusa_cli"
+  spec.version       = ArethusaCLI::VERSION
   spec.authors       = ["LFDM"]
   spec.email         = ["1986gh@gmail.com"]
-  spec.summary       = %q{Generates a skeleton for an Arethusa plugin}
+  spec.summary       = %q{Command line helpers for Arethusa}
   spec.description   = spec.summary
   spec.homepage      = ""
   spec.license       = "MIT"
