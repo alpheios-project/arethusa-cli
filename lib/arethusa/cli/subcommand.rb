@@ -1,4 +1,4 @@
-module ArethusaCLI
+class Arethusa::CLI
   class Subcommand < Thor
     def self.as_subcommand(subcommand)
       namespace(subcommand)

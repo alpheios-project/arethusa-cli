@@ -1,6 +1,6 @@
 require 'thor'
 
-module ArethusaCLI
+class Arethusa::CLI
   class Generator < Subcommand
     as_subcommand :generate
 

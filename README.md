@@ -1,4 +1,4 @@
-# ArethusaCLI
+# Arethusa::CLI
 
 [![Version](http://allthebadges.io/latin-language-toolkit/arethusa_plugin_generator/badge_fury.png)](http://allthebadges.io/latin-language-toolkit/arethusa_plugin_generator/badge_fury)
 [![Dependencies](http://allthebadges.io/latin-language-toolkit/arethusa_plugin_generator/gemnasium.png)](http://allthebadges.io/latin-language-toolkit/arethusa_plugin_generator/gemnasium)
@@ -11,7 +11,7 @@ Command line tools for [Arethusa](http://github.com/latin-language-toolkit/areth
 ## Installation
 
 ```
-  gem install arethusa_cli
+  gem install arethusa-cli
 ```
 
 ## Usage
@@ -36,7 +36,7 @@ might change frequently, as Arethusa is continuing to make progress.
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/arethusa_cli/fork )
+1. Fork it ( https://github.com/[my-github-username]/arethusa-cli/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

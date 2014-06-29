@@ -1,9 +1,11 @@
 require 'thor'
-require 'arethusa_cli/subcommand'
 
-module ArethusaCLI
+module Arethusa
   class CLI < Thor
-    require 'arethusa_cli/generator'
+    require 'arethusa/cli/version'
+    require 'arethusa/cli/subcommand'
+
+    require 'arethusa/cli/generator'
 
     register(Generator, Generator.namespace, "#{Generator.namespace} [ACTION]", 'Generates Arethusa files. Call "arethusa generate" to learn more')
   end
