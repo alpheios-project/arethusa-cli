@@ -28,10 +28,22 @@ then run
 This will create all files and make all changes you need to get started with your plugin. Also check out `arethusa generate help plugin` to learn about additional options.
 
 
+- Deployment and build helpers
+
+If you plan to deploy Arethusa on a webserver like Apache, the `arethusa build`
+command will help you bundle up all needed files and `arethusa deploy`
+will make it easy to deploy Arethusa on a remote server.
+
+Use the usage descriptions (`arethusa help build` and `arethusa help
+deploy`) for more detailed instructions.
+
+
 ## Disclaimer
 
 Make sure you're running the latest version of this gem at all times. It
 might change frequently, as Arethusa is continuing to make progress.
+
+All commands have to be called from within your Arethusa directory.
 
 
 ## Contributing
