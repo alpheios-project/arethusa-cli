@@ -1,4 +1,5 @@
 require 'thor'
+require 'arethusa_cli/subcommand'
 
 module ArethusaCLI
   class CLI < Thor

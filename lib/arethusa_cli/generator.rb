@@ -1,15 +1,11 @@
 require 'thor'
 
 module ArethusaCLI
-  class Generator < Thor
-    namespace :generate
+  class Generator < Subcommand
+    as_subcommand :generate
 
     def self.source_root
       File.dirname(__FILE__)
-    end
-
-    def self.banner(command, namespace = nil, subcommand = false)
-      "#{basename} #{@namespace} #{command.usage}"
     end
 
     include Thor::Actions
