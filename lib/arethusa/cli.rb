@@ -23,6 +23,19 @@ module Arethusa
     end
 
     desc 'deploy ADDRESS DIRECTORY', 'Deploys an Arethusa archive through ssh'
+    long_desc <<-EOF
+Uses ssh to deploy Arethus on a remote server.
+
+By default a new Arethusa archive file will get created in the process
+(overridden by -f), which will be transferred through ssh to its remote
+location, where the files are decompressed.
+
+A regular ssh connection is used. If you need to specify additional options
+to the ssh command  (like using a specific identity file), use -o and
+pass them as a string. Here's a rather complex usage example:
+
+arethusa deploy user@hostname /var/www -f arethusa-1.0.0.tgz -o "-i key.pem"
+EOF
     method_option :options, aliases: '-o',
       desc: 'Options to pass to the ssh command'
     method_option :file, aliases: '-f',
