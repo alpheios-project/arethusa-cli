@@ -43,6 +43,8 @@ deploy`) for more detailed instructions.
 Make sure you're running the latest version of this gem at all times. It
 might change frequently, as Arethusa is continuing to make progress.
 
+All commands have to be called from within your Arethusa directory.
+
 
 ## Contributing
 
