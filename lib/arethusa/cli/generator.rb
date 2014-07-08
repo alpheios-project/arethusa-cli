@@ -9,7 +9,7 @@ class Arethusa::CLI
     end
 
     include Thor::Actions
-    attr_reader :namespace, :name
+    attr_reader :namespace
 
     desc 'plugin NAME', 'Creates a new Arethusa plugin skeleton'
     method_option :namespace, aliases: '-n', default: 'arethusa',
@@ -36,14 +36,28 @@ class Arethusa::CLI
     end
 
     no_commands do
+      def name(js = false)
+        if js
+          to_camelcase(@name)
+        else
+          @name
+        end
+      end
+
+      def to_camelcase(str)
+        parts = str.split('_')
+        first = parts.shift
+        "#{first}#{parts.map(&:capitalize).join}"
+      end
+
       def try(message, method)
         puts
         say_status('trying', "to #{message}...", :yellow)
         send(method)
       end
 
-      def namespaced_name
-        [namespace, name].compact.join('.')
+      def namespaced_name(js = false)
+        [namespace, name(js)].compact.join('.')
       end
 
       DIRECTORIES = %w{ plugin_dir template_dir }
@@ -71,7 +85,7 @@ class Arethusa::CLI
 
       def add_module
         insert_into_file(arethusa_main, before: /\n\]/, force: false) do
-          ",\n  '#{namespaced_name}'"
+          ",\n  '#{namespaced_name(true)}'"
         end
       end
 
@@ -81,13 +95,13 @@ class Arethusa::CLI
 
       def add_minification
         insert_into_file(gruntfile, after: /pluginFiles\(.*?core.*?\).*?\n/, force: false) do
-          %[      #{name}: { files: pluginFiles('#{namespaced_name}') },\n]
+          %[      #{name(true)}: { files: pluginFiles('#{namespaced_name}') },\n]
         end
       end
 
       def add_minification_task
         insert_into_file(gruntfile, after: /registerTask.*?minify.*?\n/, force: false) do
-          %{    'uglify:#{name}',\n}
+          %{    'uglify:#{name(true)}',\n}
         end
       end
 
@@ -110,8 +124,8 @@ class Arethusa::CLI
 Now add your new #{name} plugin to a conf file and add a configuration for it.
 It could look like this:
 
- "#{name}" : {
-   "name" : "#{name}",
+ "#{name(true)}" : {
+   "name" : "#{name(true)}",
    "template" : "#{html_template_file.slice(/template.*/)}"
  }
         EOF
