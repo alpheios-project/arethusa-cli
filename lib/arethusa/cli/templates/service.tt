@@ -1,13 +1,13 @@
 "use strict";
 
-angular.module('<%= namespaced_name %>').service('<%= name %>', [
+angular.module('<%= namespaced_name(true) %>').service('<%= name(true) %>', [
   'state',
   'configurator',
   function(state, configurator) {
     var self = this;
 
     function configure() {
-      configurator.getConfAndDelegate('<%= name %>', self);
+      configurator.getConfAndDelegate('<%= name(true) %>', self);
     }
 
     configure();
