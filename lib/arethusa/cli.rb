@@ -86,7 +86,7 @@ EOF
       end
 
       def folders_to_deploy
-        %w{ app bower_components dist vendor }
+        %w{ app bower_components dist vendor favicon.ico }
       end
 
       def archive_path
