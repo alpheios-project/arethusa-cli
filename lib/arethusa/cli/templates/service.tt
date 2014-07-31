@@ -6,6 +6,11 @@ angular.module('<%= namespaced_name(true) %>').service('<%= name(true) %>', [
   function(state, configurator) {
     var self = this;
 
+    this.defaultConf = {
+      name: '<%= name(true) %>',
+      template: 'templates/<%= namespaced_name %>/<%= name %>.html'
+    }
+
     function configure() {
       configurator.getConfAndDelegate('<%= name(true) %>', self);
     }
