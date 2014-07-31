@@ -84,8 +84,8 @@ class Arethusa::CLI
       end
 
       def add_module
-        insert_into_file(arethusa_main, before: /\n\]/, force: false) do
-          ",\n  '#{namespaced_name(true)}'"
+        insert_into_file(arethusa_main, after: /arethusa\.core',\n/, force: false) do
+          "  '#{namespaced_name(true)}',\n"
         end
       end
 
@@ -100,7 +100,7 @@ class Arethusa::CLI
       end
 
       def add_minification_task
-        insert_into_file(gruntfile, after: /registerTask.*?minify.*?\n/, force: false) do
+        insert_into_file(gruntfile, after: /registerTask\('minify.*?\n/, force: false) do
           %{    'uglify:#{name(true)}',\n}
         end
       end
