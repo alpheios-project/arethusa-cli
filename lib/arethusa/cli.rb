@@ -55,8 +55,12 @@ EOF
 
     no_commands do
       def minify
-        `grunt minify`
-        say_status(:success, 'minified Arethusa')
+        if `grunt minify:css minify`
+          say_status(:success, 'minified Arethusa')
+        else
+          say_status(:error, 'minification failed')
+          exit
+        end
       end
 
       # For deploy command
