@@ -6,10 +6,12 @@ module Arethusa
     require 'arethusa/cli/subcommand'
 
     require 'arethusa/cli/generator'
+    require 'arethusa/cli/transformer'
 
     include Thor::Actions
 
     register(Generator, Generator.namespace, "#{Generator.namespace} [ACTION]", 'Generates Arethusa files. Call "arethusa generate" to learn more')
+    register(Transformer, Transformer.namespace, "#{Transformer.namespace} [ACTION]", 'Tranforms Alpheios conf files. Call "arethusa transform" to learn more')
 
     desc 'build', 'Creates a tar archive to be used for deployment'
     method_option :minify, aliases: '-m', type: :boolean, default: true,
