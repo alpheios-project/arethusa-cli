@@ -13,7 +13,7 @@ class Arethusa::CLI
       parse('relation', :add_label)
       parse('subrelation', :add_suffix)
 
-      puts @conf.to_json
+      puts JSON.pretty_generate(@conf, indent: '  ')
     end
 
     no_commands do
