@@ -63,5 +63,3 @@ class Arethusa::CLI
     end
   end
 end
-
-
