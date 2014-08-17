@@ -5,8 +5,8 @@ class Arethusa::CLI
   class Transformer < Subcommand
     as_subcommand :transform
 
-    desc 'relation [FILE]', 'Transforms relation configurations'
-    def relation(file)
+    desc 'relations [FILE]', 'Transforms relation configurations'
+    def relations(file)
       @doc = Nokogiri::XML(open(file))
       @conf = Relations.new
 
