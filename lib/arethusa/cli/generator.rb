@@ -35,6 +35,21 @@ class Arethusa::CLI
       give_conf_instructions
     end
 
+    desc 'spec NAME', 'Generates a new spec file for an Arethusa plugin'
+    method_option :namespace, aliases: '-n', default: 'arethusa',
+      desc: 'Namespace of the new plugin'
+    method_option :commit, type: :boolean, aliases: '-c',
+      desc: 'Commit the skeleton with git'
+    def spec(name)
+      @name = name
+      @namespace = options[:namespace]
+
+      create_spec_file
+
+      commit_changes if options[:commit]
+      say_status(:success, "Created spec file for #{namespaced_name}")
+    end
+
     no_commands do
       def name(js = false)
         if js
@@ -81,6 +96,11 @@ class Arethusa::CLI
 
       def create_html_template
         template('templates/html_template.tt', html_template_file)
+      end
+
+      def create_spec_file
+        empty_directory(spec_dir)
+        template('templates/plugin_spec.tt', spec_dir("#{name}_spec.js"))
       end
 
       def add_module
@@ -152,8 +172,14 @@ It could look like this:
         File.join(destination_root, 'app/templates')
       end
 
-      def commit_changes
-        message = %{"Add skeleton for #{namespaced_name}"}
+      def spec_dir(file = '')
+        File.join(destination_root, 'spec', namespaced_name, file)
+      end
+
+      def commit_changes(spec = false)
+        sp = spec ? "spec " : ""
+
+        message = %{"Add #{sp}skeleton for #{namespaced_name}"}
         `git add -A`
         `git commit -m #{message}`
         sha = `git rev-parse --short HEAD`.chomp
