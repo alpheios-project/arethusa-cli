@@ -173,7 +173,7 @@ It could look like this:
       end
 
       def spec_dir(file = '')
-        File.join(destination_root, 'app/spec', namespaced_name, file)
+        File.join(destination_root, 'spec', namespaced_name, file)
       end
 
       def commit_changes(spec = false)
