@@ -1,0 +1,21 @@
+"use strict";
+
+describe('<%= name(true) %>', function() {
+  var <%= name(true) %>, state;
+
+  beforeEach(function() {
+    module("arethusa.core", function($provide) {
+      $provide.value('configurator', arethusaMocks.configurator());
+    });
+
+    module("<%= namespaced_name(true) %>");
+
+    inject(function(_<%= name(true) %>_, _state_) {
+      <%= name(true) %> = _<%= name(true) %>_;
+      state = _state_;
+      state.tokens = arethusaMocks.tokens();
+    });
+  });
+
+  // Write your specs here!
+});
