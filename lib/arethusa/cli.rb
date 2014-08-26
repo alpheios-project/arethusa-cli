@@ -42,6 +42,8 @@ EOF
       desc: 'Options to pass to the ssh command'
     method_option :file, aliases: '-f',
       desc: 'Archive file to use - builds a new one by default'
+    method_option :small, aliases: '-s', type: :boolean, default: false,
+      desc: 'Deploys only Arethusa files without third party code'
     method_option :minify, aliases: '-m', type: :boolean, default: true,
       desc: 'Minifies Arethusa before building'
     def deploy(address, directory)
@@ -49,6 +51,8 @@ EOF
       @directory = directory
       @ssh_options = options[:options]
       @archive = options[:file]
+
+      @small = options[:small]
 
       minify if options[:minify] &! @archive
       execute
@@ -92,7 +96,11 @@ EOF
       end
 
       def folders_to_deploy
-        %w{ app bower_components dist vendor favicon.ico }
+        if @small
+          %w{ app dist favicon.ico }
+        else
+          %w{ app bower_components dist vendor favicon.ico }
+        end
       end
 
       def archive_path
