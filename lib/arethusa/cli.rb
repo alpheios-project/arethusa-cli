@@ -79,7 +79,7 @@ EOF
 
     no_commands do
       def minify
-        if `grunt minify:css minify`
+        if `grunt minify:all`
           say_status(:success, 'minified Arethusa')
         else
           say_status(:error, 'minification failed')
