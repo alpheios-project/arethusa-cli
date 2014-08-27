@@ -63,12 +63,18 @@ EOF
     desc 'merge FILE', 'Merge Arethusa configuration files'
     method_option :base_path, aliases: '-b',
       desc: 'Base path to conf files to be included'
+    method_option :minify, aliases: '-m',
+      desc: 'Print the resulting JSON minified'
     def merge(file)
       @conf = read_conf(file)
       @conf_dir = options[:base_path] || app_dir
       traverse_and_include(@conf)
 
-      puts JSON.pretty_generate(@conf, indent: '  ')
+      if options[:minify]
+        puts @conf.to_json
+      else
+        puts JSON.pretty_generate(@conf, indent: '  ')
+      end
     end
 
     no_commands do
