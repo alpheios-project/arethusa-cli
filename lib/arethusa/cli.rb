@@ -1,4 +1,5 @@
 require 'thor'
+require 'json'
 
 module Arethusa
   class CLI < Thor
@@ -57,6 +58,14 @@ EOF
       minify if options[:minify] &! @archive
       execute
       say_status(:deployed, "at #{@address} - #{@directory}")
+    end
+
+    desc 'merge FILE', 'Merge Arethusa configuration files'
+    def merge(file)
+      @conf = read_conf(file)
+      traverse_and_include(@conf)
+
+      puts JSON.pretty_generate(@conf, indent: '  ')
     end
 
     no_commands do
@@ -129,6 +138,35 @@ EOF
 
       def commit_sha
         `git rev-parse --short HEAD`.strip
+      end
+
+      # methods for merging
+      def app_dir
+        "app"
+      end
+
+      def traverse_and_include(conf)
+        inside app_dir do
+          traverse(conf)
+        end
+      end
+
+      def traverse(conf)
+        clone = conf.clone
+        clone.each do |key, value|
+          if value.is_a?(Hash)
+            traverse(conf[key])
+          elsif key == 'fileUrl'
+            additional_conf = read_conf(value)
+            conf.delete(key)
+            conf.merge!(additional_conf)
+            traverse(additional_conf)
+          end
+        end
+      end
+
+      def read_conf(path)
+        JSON.parse(File.read(path))
       end
     end
   end
