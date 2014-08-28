@@ -67,7 +67,7 @@ EOF
       desc: 'Print the resulting JSON minified'
     def merge(file)
       @conf = read_conf(file)
-      @conf_dir = options[:base_path] || app_dir
+      @conf_dir = options[:base_path] || config_dir
       traverse_and_include(@conf)
 
       if options[:minify]
@@ -150,8 +150,8 @@ EOF
       end
 
       # methods for merging
-      def app_dir
-        "app"
+      def config_dir
+        "app/static/configs"
       end
 
       def traverse_and_include(conf)
@@ -165,7 +165,7 @@ EOF
         clone.each do |key, value|
           if value.is_a?(Hash)
             traverse(conf[key])
-          elsif key == 'fileUrl'
+          elsif key == '@include'
             additional_conf = read_conf(value)
             conf.delete(key)
             conf.merge!(additional_conf)
