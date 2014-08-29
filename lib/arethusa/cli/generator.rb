@@ -24,8 +24,7 @@ class Arethusa::CLI
       create_files
 
       try('insert module into arethusa', :add_module)
-      try('add minification routine', :add_minification)
-      try('add minification task', :add_minification_task)
+      try('add to Gruntfile', :add_to_gruntfile)
       try('add module to index.html', :add_to_index)
 
       commit_changes if options[:commit]
@@ -113,15 +112,9 @@ class Arethusa::CLI
         js_dir('arethusa.js')
       end
 
-      def add_minification
-        insert_into_file(gruntfile, after: /pluginFiles\(.*?core.*?\).*?\n/, force: false) do
-          %[      #{name(true)}: { files: pluginFiles('#{namespaced_name}') },\n]
-        end
-      end
-
-      def add_minification_task
-        insert_into_file(gruntfile, after: /registerTask\('minify.*?\n/, force: false) do
-          %{    'uglify:#{name(true)}',\n}
+      def add_to_gruntfile
+        insert_into_file(gruntfile, after: /var arethusaModules.*?\n/, force: false) do
+          %[  "#{namespaced_name}",\n]
         end
       end
 
