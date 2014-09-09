@@ -26,7 +26,7 @@ class Arethusa::CLI
       end
 
       def spec_dir(file = '')
-        File.join(destination_root, 'spec', namespaced_name, file)
+        File.join(destination_root, 'spec', mod || namespaced_name, file)
       end
 
       def css_dir(file = '')
@@ -87,6 +87,14 @@ class Arethusa::CLI
 
       def create_conf_file
         template(template_path('conf'), conf_dir('staging.json'))
+      end
+
+      def create_retriever
+        template(template_path('retriever'), js_dir(File.join(mod, "#{name}.js")))
+      end
+
+      def create_retriever_spec
+        template(template_path('retriever_spec'), spec_dir("#{name}_spec.js"))
       end
     end
   end

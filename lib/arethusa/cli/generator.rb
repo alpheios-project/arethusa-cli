@@ -48,6 +48,15 @@ class Arethusa::CLI
       say_status(:success, "Created spec file for #{namespaced_name}")
     end
 
+    desc 'retriever MODULE NAME', 'Create a new Arethusa retriever skeleton'
+    def retriever(mod, name)
+      @module = mod
+      @name = name
+
+      create_retriever
+      create_retriever_spec
+    end
+
     no_commands do
       include Helpers::NameHandler
       include Helpers::DirectoriesAndFiles

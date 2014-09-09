@@ -11,13 +11,18 @@ class Arethusa::CLI
         js ? to_camelcase(@namespace) : @namespace
       end
 
-      def name(js = false)
-        js ? to_camelcase(@name) : @name
+      def name(js = false, capitalize = false)
+        js ? to_camelcase(@name, capitalize) : @name
       end
 
-      def to_camelcase(str)
+      def mod(js = false)
+        js ? to_camelcase(@module) : @module
+      end
+
+      def to_camelcase(str, capitalize = false)
         parts = str.split('_')
         first = parts.shift
+        first.capitalize! if capitalize
         "#{first}#{parts.map(&:capitalize).join}"
       end
     end
