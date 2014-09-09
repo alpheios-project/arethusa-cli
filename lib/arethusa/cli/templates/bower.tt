@@ -3,5 +3,8 @@
   "version" : "0.0.1",
   "dependencies": {
     "arethusa" : "latin-language-toolkit/arethusa#master"
+  },
+  "resolutions" : {
+    "angular" : "1.2.17"
   }
 }
