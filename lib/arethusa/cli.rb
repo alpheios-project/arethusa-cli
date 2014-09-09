@@ -14,7 +14,7 @@ module Arethusa
     include Thor::Actions
 
     def self.source_root
-      File.dirname(__FILE__)
+      File.join(File.dirname(__FILE__), 'cli')
     end
 
     register(Generator, Generator.namespace, "#{Generator.namespace} [ACTION]", 'Generates Arethusa files. Call "arethusa generate" to learn more')
@@ -95,6 +95,7 @@ EOF
         init_git
         create_folder_hierarchy
         create_templates
+        install
       end
     end
 
@@ -118,6 +119,15 @@ EOF
         create_service
         create_html_template
         create_spec
+        create_gitignore
+        create_jshintrc
+        create_package
+        create_bower
+        create_gruntfile
+      end
+
+      def install
+        `npm install && bower install`
       end
 
       def minify
