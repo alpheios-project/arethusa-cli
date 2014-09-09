@@ -26,7 +26,15 @@ class Arethusa::CLI
       end
 
       def css_dir(file = '')
-        File.join(destination_root, 'css', file)
+        File.join(destination_root, 'app/css', file)
+      end
+
+      def conf_dir(file = '')
+        File.join(destination_root, 'app/static', 'configs', file)
+      end
+
+      def dist_dir(file = '')
+        File.join(destination_root, 'dist', file)
       end
     end
   end
