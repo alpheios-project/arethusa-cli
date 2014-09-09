@@ -79,7 +79,35 @@ EOF
       end
     end
 
+    desc 'init NAME', 'Initializes a new git repo for plugin development'
+    method_option :namespace, aliases: '-n', required: true,
+      desc: 'Namespace of the plugin'
+    def init(name)
+      @name = name
+      @namespace = options[:namespace]
+
+
+      inside namespaced_name do
+        init_git
+        create_folder_hierarchy
+      end
+    end
+
     no_commands do
+      include Helpers::NameHandler
+      include Helpers::DirectoriesAndFiles
+
+      def init_git
+        if `git init`
+          say_status(:success, "Initialized new repo in #{namespaced_name}")
+        end
+      end
+
+      def create_folder_hierarchy
+        dirs = [ plugin_dir, template_dir, css_dir, conf_dir, dist_dir ]
+        dirs.each { |dir| empty_directory(dir) }
+      end
+
       def minify
         if `grunt minify:all`
           say_status(:success, 'minified Arethusa')
