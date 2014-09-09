@@ -111,7 +111,7 @@ EOF
       def create_folder_hierarchy
         dirs = [
           plugin_dir, template_dir, template_dir('compiled'),
-          css_dir, conf_dir, dist_dir
+          css_dir, conf_dir, dist_dir, dist_dir('configs')
         ]
         dirs.each { |dir| empty_directory(dir) }
       end
