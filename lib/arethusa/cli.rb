@@ -4,6 +4,8 @@ require 'json'
 module Arethusa
   class CLI < Thor
     require 'arethusa/cli/version'
+    require 'arethusa/cli/helpers/name_handler'
+    require 'arethusa/cli/helpers/directories_and_files'
     require 'arethusa/cli/subcommand'
 
     require 'arethusa/cli/generator'

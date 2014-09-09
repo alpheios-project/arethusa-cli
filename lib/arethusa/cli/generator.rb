@@ -49,6 +49,7 @@ class Arethusa::CLI
 
     no_commands do
       include Helpers::NameHandler
+      include Helpers::DirectoriesAndFiles
 
       def try(message, method)
         puts
@@ -115,30 +116,6 @@ It could look like this:
  }
         EOF
         puts text.lines.map { |line| "\t#{line}" }.join
-      end
-
-      def plugin_dir(file = '')
-        File.join(js_dir, namespaced_name, file)
-      end
-
-      def template_dir(file = '')
-        File.join(temp_dir, namespaced_name, file)
-      end
-
-      def html_template_file
-        template_dir("#{name}.html")
-      end
-
-      def js_dir(file = '')
-        File.join(destination_root, 'app/js', file)
-      end
-
-      def temp_dir
-        File.join(destination_root, 'app/templates')
-      end
-
-      def spec_dir(file = '')
-        File.join(destination_root, 'spec', namespaced_name, file)
       end
 
       def commit_changes(spec = false)
