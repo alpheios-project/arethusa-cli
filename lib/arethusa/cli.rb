@@ -92,6 +92,7 @@ EOF
         init_git
         create_folder_hierarchy
         create_templates
+        initial_commit
         install
       end
     end
@@ -104,6 +105,11 @@ EOF
         if `git init`
           say_status(:success, "Initialized new repo in #{namespaced_name}")
         end
+      end
+
+      def initial_commit
+        `git add -A`
+        `git commit -m 'Initial commit'`
       end
 
       def create_folder_hierarchy
