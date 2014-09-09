@@ -53,7 +53,7 @@ class Arethusa::CLI
         template(template_path('html_template'), html_template_file)
       end
 
-      def create_spec_file
+      def create_spec
         template(template_path('plugin_spec'), spec_dir("#{name}_spec.js"))
       end
     end

@@ -42,7 +42,7 @@ class Arethusa::CLI
       @namespace = options[:namespace]
 
       empty_directory(spec_dir)
-      create_spec_file
+      create_spec
 
       commit_changes if options[:commit]
       say_status(:success, "Created spec file for #{namespaced_name}")
