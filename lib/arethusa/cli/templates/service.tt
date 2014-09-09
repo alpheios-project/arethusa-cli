@@ -12,7 +12,7 @@ angular.module('<%= namespaced_name(true) %>').service('<%= name(true) %>', [
     };
 
     function configure() {
-      configurator.getConfAndDelegate('<%= name(true) %>', self);
+      configurator.getConfAndDelegate(self);
     }
 
     this.init = function() {
