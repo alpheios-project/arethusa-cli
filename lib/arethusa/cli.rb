@@ -128,6 +128,7 @@ EOF
         create_bower
         create_gruntfile
         create_index_file
+        create_conf_file
       end
 
       def install
@@ -231,14 +232,20 @@ EOF
           elsif key == '@include'
             additional_conf = read_conf(value)
             conf.delete(key)
-            conf.merge!(additional_conf)
-            traverse(additional_conf)
+            if additional_conf
+              conf.merge!(additional_conf)
+              traverse(additional_conf)
+            end
           end
         end
       end
 
       def read_conf(path)
-        JSON.parse(File.read(path))
+        begin
+          JSON.parse(File.read(path))
+        rescue
+          nil
+        end
       end
     end
   end

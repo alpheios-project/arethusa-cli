@@ -80,6 +80,14 @@ class Arethusa::CLI
       def create_scss
         template(template_path('scss'), css_dir("#{namespaced_name}.scss"))
       end
+
+      def create_index_file
+        template(template_path('index'), "app/index.html")
+      end
+
+      def create_conf_file
+        template(template_path('conf'), conf_dir('staging.json'))
+      end
     end
   end
 end
