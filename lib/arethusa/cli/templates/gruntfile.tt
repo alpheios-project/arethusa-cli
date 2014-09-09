@@ -9,6 +9,7 @@ var reloadPort = 35280;
 var confPath = 'app/static/configs';
 var arethusaPackages = 'bower_components/arethusa/dist/arethusa_packages.min.js';
 var arethusaFiles = 'bower_components/arethusa/dist/arethusa.min.js';
+var specHelpers = 'bower_components/arethusa/spec/helpers/**/*';
 
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
@@ -28,6 +29,8 @@ module.exports = function(grunt) {
         options: {
           files : [
             arethusaPackages,
+            'bower_components/angular-mocks/angular-mocks.js',
+            specHelpers,
             arethusaFiles,
             srcFiles,
             specFiles
