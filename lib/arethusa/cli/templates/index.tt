@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="arethusa" ng-di-strict>
+<head>
+  <link rel="stylesheet" href="../bower_components/arethusa/dist/arethusa.min.css">
+  <link rel="stylesheet" href="../bower_components/arethusa/vendor/foundation-icons/foundation-icons.css">
+  <link rel="stylesheet" href="../bower_components/arethusa/vendor/font-awesome-4.1.0/css/font-awesome.min.css">
+
+  <script src="../bower_components/arethusa/dist/arethusa_packages.min.js"></script>
+  <script src="../bower_components/arethusa/dist/arethusa.min.js"></script>
+
+  <script>
+    arethusa.setBasePath('../bower_components/arethusa')
+  </script>
+
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body key-capture>
+  <div id="arethusa-main-view"  class="fade very-slow" ng-view></div>
+</body>
+</html>
