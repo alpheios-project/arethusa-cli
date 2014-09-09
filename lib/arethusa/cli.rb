@@ -13,6 +13,10 @@ module Arethusa
 
     include Thor::Actions
 
+    def self.source_root
+      File.dirname(__FILE__)
+    end
+
     register(Generator, Generator.namespace, "#{Generator.namespace} [ACTION]", 'Generates Arethusa files. Call "arethusa generate" to learn more')
     register(Transformer, Transformer.namespace, "#{Transformer.namespace} [ACTION]", 'Tranforms Alpheios conf files. Call "arethusa transform" to learn more')
 
@@ -90,6 +94,7 @@ EOF
       inside namespaced_name do
         init_git
         create_folder_hierarchy
+        create_templates
       end
     end
 
@@ -106,6 +111,13 @@ EOF
       def create_folder_hierarchy
         dirs = [ plugin_dir, template_dir, css_dir, conf_dir, dist_dir ]
         dirs.each { |dir| empty_directory(dir) }
+      end
+
+      def create_templates
+        create_module
+        create_service
+        create_html_template
+        create_spec
       end
 
       def minify
