@@ -8,7 +8,7 @@ angular.module('<%= namespaced_name(true) %>').service('<%= name(true) %>', [
     this.name = '<%= namespaced_name(true, true) %>';
 
     this.defaultConf = {
-      template: 'templates/<%= namespaced_name %>/<%= name %>.html'
+      template: 'templates/<%= namespaced_name(false, true) %>/<%= name %>.html'
     };
 
     function configure() {
