@@ -94,7 +94,7 @@ module.exports = function(grunt) {
       '<%= namespaced_name %>' : {
         cwd: 'app',
         src: 'templates/**/*.html',
-        dest: 'app/templates/<%= namespaced_name %>/<%= namespaced_name %>.templates.js'
+        dest: 'app/templates/<%= namespaced_name %>/compiled/<%= namespaced_name %>.templates.js'
       }
     },
     connect: {
