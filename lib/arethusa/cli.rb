@@ -95,7 +95,9 @@ EOF
         init_git
         create_folder_hierarchy
         create_templates
-        #install
+        install
+
+        call_grunt
       end
     end
 
@@ -138,6 +140,10 @@ EOF
         inside 'bower_components/arethusa' do
           `npm install && bower install`
         end
+      end
+
+      def call_grunt
+        `grunt`
       end
 
       def minify
