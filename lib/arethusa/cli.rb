@@ -83,12 +83,10 @@ EOF
       end
     end
 
-    desc 'init NAME', 'Initializes a new git repo for plugin development'
-    method_option :namespace, aliases: '-n', required: true,
-      desc: 'Namespace of the plugin'
-    def init(name)
+    desc 'init NAMESPACE NAME', 'Initializes a new git repo for plugin development'
+    def init(namespace, name)
       @name = name
-      @namespace = options[:namespace]
+      @namespace = namespace
 
       inside namespaced_name do
         init_git
