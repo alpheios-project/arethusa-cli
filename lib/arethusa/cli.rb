@@ -94,7 +94,7 @@ EOF
         init_git
         create_folder_hierarchy
         create_templates
-        #install
+        install
       end
     end
 
