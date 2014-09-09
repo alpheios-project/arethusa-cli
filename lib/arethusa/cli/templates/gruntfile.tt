@@ -5,7 +5,7 @@ var htmlFiles = 'app/**/*.html';
 var cssFiles = 'app/**/*.scss';
 var specFiles = 'spec/**/*.js';
 var devServerPort = 8082;
-var reloadPort = 35280;
+var reloadPort = 35279;
 var confPath = 'app/static/configs';
 var arethusaPackages = 'bower_components/arethusa/dist/arethusa_packages.min.js';
 var arethusaFiles = 'bower_components/arethusa/dist/arethusa.min.js';
@@ -13,6 +13,22 @@ var specHelpers = 'bower_components/arethusa/spec/helpers/**/*';
 
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
+
+  function confFiles() {
+    return grunt.file.expand(confPath + '/*.json');
+  }
+
+  function confMergeCommands() {
+    var file, target, cmd, cmds = [];
+    var files = confFiles();
+    for (var i = files.length - 1; i >= 0; i--){
+      file = files[i];
+      target = file.replace(confPath, 'dist/configs');
+      cmd = 'arethusa merge ' + file + ' -m > ' + target;
+      cmds.push(cmd);
+    }
+    return cmds;
+  }
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -133,9 +149,14 @@ module.exports = function(grunt) {
       },
       all: ['*.js', srcFiles, specFiles]
     },
+    shell: {
+      minifyConfs: {
+        command: confMergeCommands().join('&')
+      }
+    },
     concurrent: {
       minify: {
-        tasks: [ 'minify:src', 'minify:css' ]
+        tasks: [ 'minify:src', 'minify:css', 'minify:conf' ]
       },
       server: {
         tasks: ['watch:server', 'server'],
@@ -148,6 +169,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('minify:src', ['ngtemplates', 'uglify']);
   grunt.registerTask('minify:css', ['sass', 'cssmin']);
+  grunt.registerTask('minify:conf', 'shell:minifyConfs');
   grunt.registerTask('minify', ['concurrent:minify']);
   grunt.registerTask('spec', 'karma:spec');
   grunt.registerTask('server', ['minify', 'connect:devServer']);
