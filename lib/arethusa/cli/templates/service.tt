@@ -5,17 +5,15 @@ angular.module('<%= namespaced_name(true) %>').service('<%= name(true) %>', [
   'configurator',
   function(state, configurator) {
     var self = this;
+    this.name = '<%= name(true) %>'
 
     this.defaultConf = {
-      name: '<%= name(true) %>',
       template: 'templates/<%= namespaced_name %>/<%= name %>.html'
     }
 
     function configure() {
       configurator.getConfAndDelegate('<%= name(true) %>', self);
     }
-
-    configure();
 
     this.init = function() {
       configure();
