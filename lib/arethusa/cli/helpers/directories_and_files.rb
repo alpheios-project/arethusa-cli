@@ -1,6 +1,10 @@
 class Arethusa::CLI
   module Helpers
     module DirectoriesAndFiles
+      def template_path(name)
+        File.join(File.expand_path('../../templates/', __FILE__), name)
+      end
+
       def plugin_dir(file = '')
         File.join(js_dir, namespaced_name, file)
       end
@@ -38,19 +42,19 @@ class Arethusa::CLI
       end
 
       def create_module
-        template('templates/module.tt', js_dir("#{namespaced_name}.js"))
+        template(template_path('module'), js_dir("#{namespaced_name}.js"))
       end
 
       def create_service
-        template('templates/service.tt', plugin_dir("#{name}.js"))
+        template(template_path('service'), plugin_dir("#{name}.js"))
       end
 
       def create_html_template
-        template('templates/html_template.tt', html_template_file)
+        template(template_path('html_template'), html_template_file)
       end
 
       def create_spec_file
-        template('templates/plugin_spec.tt', spec_dir("#{name}_spec.js"))
+        template(template_path('plugin_spec'), spec_dir("#{name}_spec.js"))
       end
     end
   end
