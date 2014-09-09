@@ -5,7 +5,7 @@ angular.module('<%= namespaced_name(true) %>').service('<%= name(true) %>', [
   'configurator',
   function(state, configurator) {
     var self = this;
-    this.name = '<%= name(true) %>';
+    this.name = '<%= namespaced_name(true, true) %>';
 
     this.defaultConf = {
       template: 'templates/<%= namespaced_name %>/<%= name %>.html'
