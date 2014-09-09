@@ -76,6 +76,10 @@ class Arethusa::CLI
       def create_gruntfile
         template(template_path('gruntfile'), 'Gruntfile.js')
       end
+
+      def create_scss
+        template(template_path('scss'), css_dir("#{namespaced_name}.scss"))
+      end
     end
   end
 end

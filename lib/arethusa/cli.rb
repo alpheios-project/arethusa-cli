@@ -95,7 +95,7 @@ EOF
         init_git
         create_folder_hierarchy
         create_templates
-        install
+        #install
       end
     end
 
@@ -110,7 +110,10 @@ EOF
       end
 
       def create_folder_hierarchy
-        dirs = [ plugin_dir, template_dir, css_dir, conf_dir, dist_dir ]
+        dirs = [
+          plugin_dir, template_dir, template_dir('compiled'),
+          css_dir, conf_dir, dist_dir
+        ]
         dirs.each { |dir| empty_directory(dir) }
       end
 
@@ -119,6 +122,7 @@ EOF
         create_service
         create_html_template
         create_spec
+        create_scss
         create_gitignore
         create_jshintrc
         create_package
@@ -127,7 +131,13 @@ EOF
       end
 
       def install
-        `npm install && bower install`
+        `npm install && bower install && gem install sass -v 3.3.14`
+
+        # We have to minify Arethusa by hand for now - this won't be needed
+        # at a later stage.
+        inside 'bower_components/arethusa' do
+          `npm install && bower install`
+        end
       end
 
       def minify
