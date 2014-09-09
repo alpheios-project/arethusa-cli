@@ -7,7 +7,12 @@ angular.module('<%= mod(true) %>').factory('<%= name(true, true) %>', [
       var self = this;
       var resource = configurator.provideResource(conf.resource);
 
-      // Your code goes here!
+      this.get = function(callback) {
+        resource.get().then(function(res) {
+          data = res.data;
+          callback(data);
+        })
+      };
     };
   }
 ]);
