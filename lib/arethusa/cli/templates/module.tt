@@ -1,2 +1,2 @@
 "use strict";
-angular.module('<%= namespaced_name(true) %>', ['arethusa.core']);
+angular.module('<%= namespaced_name(true) %>', []);
