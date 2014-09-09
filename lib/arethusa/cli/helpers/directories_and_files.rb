@@ -56,6 +56,26 @@ class Arethusa::CLI
       def create_spec
         template(template_path('plugin_spec'), spec_dir("#{name}_spec.js"))
       end
+
+      def create_gitignore
+        template(template_path('gitignore'), '.gitignore')
+      end
+
+      def create_jshintrc
+        template(template_path('jshintrc'), '.jshintrc')
+      end
+
+      def create_package
+        template(template_path('package'), 'package.json')
+      end
+
+      def create_bower
+        template(template_path('bower'), 'bower.json')
+      end
+
+      def create_gruntfile
+        template(template_path('gruntfile'), 'Gruntfile.js')
+      end
     end
   end
 end

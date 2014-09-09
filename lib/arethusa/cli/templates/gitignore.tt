@@ -1,0 +1,8 @@
+node_modules/*
+bower_components/*
+*.swp
+coverage
+dist/
+deployment/
+.sass-cache
+app/css/*.css*
