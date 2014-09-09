@@ -57,5 +57,51 @@ module.exports = function(grunt) {
     coveralls: {
       src: 'coverage/**/lcov.info'
     },
+    uglify: {
+      options: {
+        sourceMap: true
+      },
+      '<%= namespaced_name %>' : {
+        files: {
+          'dist/<%= namespaced_name %>.min.js' : [
+            'app/js/<%= namespaced_name %>.js',
+            'app/js/<%= namespaced_name %>/**/*.js',
+            'app/templates/<%= namespaced_name %>/compiled/<%= namespaced_name %>.templates.js'
+          ]
+        }
+      }
+    },
+    sass: {
+      dist: {
+        options: {
+          sourcemap: true
+        },
+        files: {
+          'app/css/<%= namespaced_name %>.css': 'app/css/<%= namespaced_name %>.scss'
+        }
+      }
+    },
+    cssmin: {
+      css: {
+        src: 'app/css/**/*.css',
+        dest: 'dist/<%= namespaced_name %>.min.css'
+      }
+    },
+    ngtemplates : {
+      '<%= namespaced_name %>' : {
+        cwd: 'app',
+        src: 'templates/**/*.html',
+        dest: 'app/templates/<%= namespaced_name %>/<%= namespaced_name %>.templates.js'
+      }
+    },
+    concurrent: {
+      minify: {
+        tasks: [ 'minify:src', 'minify:css' ]
+      }
+    }
   });
+
+  grunt.registerTask('minify:src', ['ngtemplates', 'uglify']);
+  grunt.registerTask('minify:css', ['sass', 'cssmin']);
+  grunt.registerTask('minify', ['concurrent:minify']);
 };
