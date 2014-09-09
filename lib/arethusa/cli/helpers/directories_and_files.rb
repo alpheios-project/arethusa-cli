@@ -50,7 +50,6 @@ class Arethusa::CLI
       end
 
       def create_spec_file
-        empty_directory(spec_dir)
         template('templates/plugin_spec.tt', spec_dir("#{name}_spec.js"))
       end
     end

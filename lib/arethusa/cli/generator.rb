@@ -41,6 +41,7 @@ class Arethusa::CLI
       @name = name
       @namespace = options[:namespace]
 
+      empty_directory(spec_dir)
       create_spec_file
 
       commit_changes if options[:commit]
