@@ -132,7 +132,7 @@ module.exports = function(grunt) {
     watch: {
       spec: {
         files: [srcFiles, htmlFiles, specFiles],
-        tasks: 'spec'
+        tasks: 'karma:spec'
       },
       server: {
         files: [srcFiles, htmlFiles, cssFiles],
@@ -171,8 +171,9 @@ module.exports = function(grunt) {
   grunt.registerTask('minify:css', ['sass', 'cssmin']);
   grunt.registerTask('minify:conf', 'shell:minifyConfs');
   grunt.registerTask('minify', ['concurrent:minify']);
-  grunt.registerTask('spec', 'karma:spec');
+
+  grunt.registerTask('spec', 'watch:spec');
   grunt.registerTask('server', ['minify', 'connect:devServer']);
   grunt.registerTask('reload-server', 'concurrent:server');
-  grunt.registerTask('default', ['spec', 'jshint']);
+  grunt.registerTask('default', ['karma:spec', 'jshint']);
 };
