@@ -1,8 +1,10 @@
 class Arethusa::CLI
   module Helpers
     module NameHandler
-      def namespaced_name(js = false)
-        [namespace(js), name(js)].compact.join('.')
+      def namespaced_name(js = false, no_default = false)
+        ns = namespace(js);
+        ns = nil if no_default && @namespace == 'arethusa'
+        [ns, name(js)].compact.join('.')
       end
 
       def namespace(js = false)
