@@ -36,6 +36,23 @@ class Arethusa::CLI
       def dist_dir(file = '')
         File.join(destination_root, 'dist', file)
       end
+
+      def create_module
+        template('templates/module.tt', js_dir("#{namespaced_name}.js"))
+      end
+
+      def create_service
+        template('templates/service.tt', plugin_dir("#{name}.js"))
+      end
+
+      def create_html_template
+        template('templates/html_template.tt', html_template_file)
+      end
+
+      def create_spec_file
+        empty_directory(spec_dir)
+        template('templates/plugin_spec.tt', spec_dir("#{name}_spec.js"))
+      end
     end
   end
 end
