@@ -133,14 +133,6 @@ module.exports = function(grunt) {
       },
       all: ['*.js', srcFiles, specFiles]
     },
-    shell: {
-      arethusaServer : {
-        command: [
-          'cd bower_components/arethusa',
-          'grunt embedded-server'
-        ].join('&&')
-      }
-    },
     concurrent: {
       minify: {
         tasks: [ 'minify:src', 'minify:css' ]
@@ -159,7 +151,6 @@ module.exports = function(grunt) {
   grunt.registerTask('minify', ['concurrent:minify']);
   grunt.registerTask('spec', 'karma:spec');
   grunt.registerTask('server', ['minify', 'connect:devServer']);
-  grunt.registerTask('arethusa-server', 'shell:arethusaServer');
   grunt.registerTask('reload-server', 'concurrent:server');
   grunt.registerTask('default', ['spec', 'jshint']);
 };
