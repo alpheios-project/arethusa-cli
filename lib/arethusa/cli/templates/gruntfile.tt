@@ -137,7 +137,7 @@ module.exports = function(grunt) {
       arethusaServer : {
         command: [
           'cd bower_components/arethusa',
-          'grunt server'
+          'grunt embedded-server'
         ].join('&&')
       }
     },
