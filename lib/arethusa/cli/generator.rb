@@ -9,7 +9,6 @@ class Arethusa::CLI
     end
 
     include Thor::Actions
-    attr_reader :namespace
 
     desc 'plugin NAME', 'Creates a new Arethusa plugin skeleton'
     method_option :namespace, aliases: '-n', default: 'arethusa',
@@ -50,28 +49,12 @@ class Arethusa::CLI
     end
 
     no_commands do
-      def name(js = false)
-        if js
-          to_camelcase(@name)
-        else
-          @name
-        end
-      end
-
-      def to_camelcase(str)
-        parts = str.split('_')
-        first = parts.shift
-        "#{first}#{parts.map(&:capitalize).join}"
-      end
+      include Helpers::NameHandler
 
       def try(message, method)
         puts
         say_status('trying', "to #{message}...", :yellow)
         send(method)
-      end
-
-      def namespaced_name(js = false)
-        [namespace, name(js)].compact.join('.')
       end
 
       DIRECTORIES = %w{ plugin_dir template_dir }
