@@ -90,12 +90,11 @@ EOF
       @name = name
       @namespace = options[:namespace]
 
-
       inside namespaced_name do
         init_git
         create_folder_hierarchy
         create_templates
-        install
+        #install
       end
     end
 
@@ -128,6 +127,7 @@ EOF
         create_package
         create_bower
         create_gruntfile
+        create_index_file
       end
 
       def install
@@ -137,6 +137,7 @@ EOF
         # at a later stage.
         inside 'bower_components/arethusa' do
           `npm install && bower install`
+          `grunt minify:all`
         end
       end
 
