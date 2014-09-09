@@ -22,7 +22,6 @@ class Arethusa::CLI
       create_directories
       create_files
 
-      try('insert module into arethusa', :add_module)
       try('add to Gruntfile', :add_to_gruntfile)
       try('add module to index.html', :add_to_index)
 
@@ -83,16 +82,6 @@ class Arethusa::CLI
       def create_spec_file
         empty_directory(spec_dir)
         template('templates/plugin_spec.tt', spec_dir("#{name}_spec.js"))
-      end
-
-      def add_module
-        insert_into_file(arethusa_main, after: /arethusa\.core',\n/, force: false) do
-          "  '#{namespaced_name(true)}',\n"
-        end
-      end
-
-      def arethusa_main
-        js_dir('arethusa.js')
       end
 
       def add_to_gruntfile
