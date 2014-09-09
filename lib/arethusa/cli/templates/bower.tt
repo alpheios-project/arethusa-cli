@@ -1,5 +1,7 @@
 {
   "name" : "<%= namespaced_name %>",
   "version" : "0.0.1",
-  "dependencies" : {}
+  "dependencies": {
+    "arethusa" : "latin-language-toolkit/arethusa#master"
+  }
 }

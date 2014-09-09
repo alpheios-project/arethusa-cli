@@ -1,9 +1,7 @@
 {
   "name": "<%= namespaced_name %>",
   "version": "0.0.1",
-  "dependencies": {
-    "arethusa" : "latin-language-toolkit/arethusa#master"
-  },
+  "dependencies" : {},
   "devDependencies": {
     "grunt-cli": "0.1.13",
     "grunt-angular-templates": "0.5.6",
