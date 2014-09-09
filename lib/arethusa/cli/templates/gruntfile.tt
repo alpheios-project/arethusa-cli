@@ -112,7 +112,7 @@ module.exports = function(grunt) {
     },
     watch: {
       spec: {
-        files: [srcFiles, specFiles],
+        files: [srcFiles, htmlFiles, specFiles],
         tasks: 'spec'
       },
       server: {
@@ -123,6 +123,12 @@ module.exports = function(grunt) {
           livereload: true
         }
       },
+    },
+    jshint: {
+      options: {
+        jshintrc: true,
+      },
+      all: ['*.js', srcFiles, specFiles]
     },
     concurrent: {
       minify: {
@@ -143,4 +149,5 @@ module.exports = function(grunt) {
   grunt.registerTask('spec', 'karma:spec');
   grunt.registerTask('server', ['minify', 'connect:devServer']);
   grunt.registerTask('reload-server', 'concurrent:server');
+  grunt.registerTask('default', ['spec', 'jshint']);
 };
