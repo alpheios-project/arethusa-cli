@@ -18,4 +18,7 @@ describe('<%= name(true) %>', function() {
   });
 
   // Write your specs here!
+  it('succeeds to load the module', function() {
+    expect(<%= name(true) %>).toBeDefined();
+  });
 });
