@@ -9,9 +9,9 @@ angular.module('<%= mod(true) %>').factory('<%= name(true, true) %>', [
 
       this.get = function(callback) {
         resource.get().then(function(res) {
-          data = res.data;
+          var data = res.data;
           callback(data);
-        })
+        });
       };
     };
   }
