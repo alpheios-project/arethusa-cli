@@ -1,24 +1,24 @@
 "use strict";
 
 describe('<%= name(true) %>', function() {
-  var <%= name(true) %>, state;
+  var <%= name(true) %>;
+
+  var conf = {};
 
   beforeEach(function() {
-    module("arethusa.core", function($provide) {
-      $provide.value('configurator', arethusaMocks.configurator());
-    });
+    module("arethusa.core");
 
-    module("<%= namespaced_name(true) %>");
+    module('<%= namespaced_name(true) %>');
 
-    inject(function(_<%= name(true) %>_, _state_) {
+    inject(function(_<%= name(true) %>_, configurator) {
       <%= name(true) %> = _<%= name(true) %>_;
-      state = _state_;
-      state.tokens = arethusaMocks.tokens();
+      configurator.defineConfiguration(conf);
+      <%= name(true) %>.init();
     });
   });
 
   // Write your specs here!
-  it('succeeds to load the module', function() {
+  it('succeeds to load the plugin', function() {
     expect(<%= name(true) %>).toBeDefined();
   });
 });
