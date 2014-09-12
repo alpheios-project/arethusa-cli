@@ -4,12 +4,18 @@ require 'json'
 module Arethusa
   class CLI < Thor
     require 'arethusa/cli/version'
+    require 'arethusa/cli/helpers/name_handler'
+    require 'arethusa/cli/helpers/directories_and_files'
     require 'arethusa/cli/subcommand'
 
     require 'arethusa/cli/generator'
     require 'arethusa/cli/transformer'
 
     include Thor::Actions
+
+    def self.source_root
+      File.join(File.dirname(__FILE__), 'cli')
+    end
 
     register(Generator, Generator.namespace, "#{Generator.namespace} [ACTION]", 'Generates Arethusa files. Call "arethusa generate" to learn more')
     register(Transformer, Transformer.namespace, "#{Transformer.namespace} [ACTION]", 'Tranforms Alpheios conf files. Call "arethusa transform" to learn more')
@@ -77,7 +83,69 @@ EOF
       end
     end
 
+    desc 'init NAMESPACE NAME', 'Initializes a new git repo for plugin development'
+    def init(namespace, name)
+      @name = name
+      @namespace = namespace
+
+      inside namespaced_name do
+        init_git
+        create_folder_hierarchy
+        create_templates
+        initial_commit
+        install
+      end
+    end
+
     no_commands do
+      include Helpers::NameHandler
+      include Helpers::DirectoriesAndFiles
+
+      def init_git
+        if `git init`
+          say_status(:success, "Initialized new repo in #{namespaced_name}")
+        end
+      end
+
+      def initial_commit
+        `git add -A`
+        `git commit -m 'Initial commit'`
+      end
+
+      def create_folder_hierarchy
+        dirs = [
+          plugin_dir, template_dir, template_dir('compiled'),
+          css_dir, conf_dir, dist_dir, dist_dir('configs')
+        ]
+        dirs.each { |dir| empty_directory(dir) }
+      end
+
+      def create_templates
+        create_module
+        create_service
+        create_html_template
+        create_spec
+        create_scss
+        create_gitignore
+        create_jshintrc
+        create_package
+        create_bower
+        create_gruntfile
+        create_index_file
+        create_conf_file
+      end
+
+      def install
+        `npm install && bower install && gem install sass -v 3.3.14`
+
+        # We have to minify Arethusa by hand for now - this won't be needed
+        # at a later stage.
+        inside 'bower_components/arethusa' do
+          `npm install && bower install`
+          `grunt minify:all`
+        end
+      end
+
       def minify
         if `grunt minify:all`
           say_status(:success, 'minified Arethusa')
@@ -168,14 +236,20 @@ EOF
           elsif key == '@include'
             additional_conf = read_conf(value)
             conf.delete(key)
-            conf.merge!(additional_conf)
-            traverse(additional_conf)
+            if additional_conf
+              conf.merge!(additional_conf)
+              traverse(additional_conf)
+            end
           end
         end
       end
 
       def read_conf(path)
-        JSON.parse(File.read(path))
+        begin
+          JSON.parse(File.read(path))
+        rescue
+          nil
+        end
       end
     end
   end

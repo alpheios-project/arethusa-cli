@@ -1,0 +1,18 @@
+"use strict";
+
+angular.module('<%= mod(true) %>').factory('<%= name(true, true) %>', [
+  'configurator',
+  function(configurator) {
+    return function(conf) {
+      var self = this;
+      var resource = configurator.provideResource(conf.resource);
+
+      this.get = function(callback) {
+        resource.get().then(function(res) {
+          var data = res.data;
+          callback(data);
+        });
+      };
+    };
+  }
+]);

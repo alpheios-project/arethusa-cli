@@ -9,7 +9,6 @@ class Arethusa::CLI
     end
 
     include Thor::Actions
-    attr_reader :namespace
 
     desc 'plugin NAME', 'Creates a new Arethusa plugin skeleton'
     method_option :namespace, aliases: '-n', default: 'arethusa',
@@ -23,7 +22,6 @@ class Arethusa::CLI
       create_directories
       create_files
 
-      try('insert module into arethusa', :add_module)
       try('add to Gruntfile', :add_to_gruntfile)
       try('add module to index.html', :add_to_index)
 
@@ -43,35 +41,30 @@ class Arethusa::CLI
       @name = name
       @namespace = options[:namespace]
 
-      create_spec_file
+      empty_directory(spec_dir)
+      create_spec
 
       commit_changes if options[:commit]
       say_status(:success, "Created spec file for #{namespaced_name}")
     end
 
-    no_commands do
-      def name(js = false)
-        if js
-          to_camelcase(@name)
-        else
-          @name
-        end
-      end
+    desc 'retriever MODULE NAME', 'Create a new Arethusa retriever skeleton'
+    def retriever(mod, name)
+      @module = mod
+      @name = name
 
-      def to_camelcase(str)
-        parts = str.split('_')
-        first = parts.shift
-        "#{first}#{parts.map(&:capitalize).join}"
-      end
+      create_retriever
+      create_retriever_spec
+    end
+
+    no_commands do
+      include Helpers::NameHandler
+      include Helpers::DirectoriesAndFiles
 
       def try(message, method)
         puts
         say_status('trying', "to #{message}...", :yellow)
         send(method)
-      end
-
-      def namespaced_name(js = false)
-        [namespace, name(js)].compact.join('.')
       end
 
       DIRECTORIES = %w{ plugin_dir template_dir }
@@ -83,33 +76,6 @@ class Arethusa::CLI
         create_module
         create_service
         create_html_template
-      end
-
-      def create_module
-        template('templates/module.tt', js_dir("#{namespaced_name}.js"))
-      end
-
-      def create_service
-        template('templates/service.tt', plugin_dir("#{name}.js"))
-      end
-
-      def create_html_template
-        template('templates/html_template.tt', html_template_file)
-      end
-
-      def create_spec_file
-        empty_directory(spec_dir)
-        template('templates/plugin_spec.tt', spec_dir("#{name}_spec.js"))
-      end
-
-      def add_module
-        insert_into_file(arethusa_main, after: /arethusa\.core',\n/, force: false) do
-          "  '#{namespaced_name(true)}',\n"
-        end
-      end
-
-      def arethusa_main
-        js_dir('arethusa.js')
       end
 
       def add_to_gruntfile
@@ -143,30 +109,6 @@ It could look like this:
  }
         EOF
         puts text.lines.map { |line| "\t#{line}" }.join
-      end
-
-      def plugin_dir(file = '')
-        File.join(js_dir, namespaced_name, file)
-      end
-
-      def template_dir(file = '')
-        File.join(temp_dir, namespaced_name, file)
-      end
-
-      def html_template_file
-        template_dir("#{name}.html")
-      end
-
-      def js_dir(file = '')
-        File.join(destination_root, 'app/js', file)
-      end
-
-      def temp_dir
-        File.join(destination_root, 'app/templates')
-      end
-
-      def spec_dir(file = '')
-        File.join(destination_root, 'spec', namespaced_name, file)
       end
 
       def commit_changes(spec = false)
