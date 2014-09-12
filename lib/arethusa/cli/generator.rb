@@ -29,7 +29,7 @@ class Arethusa::CLI
 
       puts
       say_status(:success, "Created #{namespaced_name}")
-      give_conf_instructions
+      #give_conf_instructions
     end
 
     desc 'spec NAME', 'Generates a new spec file for an Arethusa plugin'
