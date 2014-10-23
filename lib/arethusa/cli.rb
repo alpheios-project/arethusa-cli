@@ -147,7 +147,7 @@ EOF
       end
 
       def minify
-        if `grunt minify:all`
+        if `grunt clean minify:all`
           say_status(:success, 'minified Arethusa')
         else
           say_status(:error, 'minification failed')
