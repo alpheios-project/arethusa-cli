@@ -142,12 +142,13 @@ EOF
         # at a later stage.
         inside 'bower_components/arethusa' do
           `npm install && bower install`
+          `grunt version`
           `grunt minify:all`
         end
       end
 
       def minify
-        if system('bower install && grunt clean minify:all')
+        if system('bower install && grunt clean version minify:all')
           say_status(:success, 'minified Arethusa')
         else
           say_status(:error, 'minification failed')
