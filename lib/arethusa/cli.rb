@@ -147,7 +147,7 @@ EOF
       end
 
       def minify
-        if `grunt clean minify:all`
+        if `bower install && grunt clean minify:all`
           say_status(:success, 'minified Arethusa')
         else
           say_status(:error, 'minification failed')
