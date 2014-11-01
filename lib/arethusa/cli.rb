@@ -53,9 +53,11 @@ EOF
       desc: 'Deploys only Arethusa files without third party code'
     method_option :minify, aliases: '-m', type: :boolean, default: true,
       desc: 'Minifies Arethusa before building'
+    method_option :commit, aliases: '-c', type: :boolean,
+      desc: 'Deploy in a subfolder, referenced by the current commit sha'
     def deploy(address, directory)
       @address = address
-      @directory = directory
+      @directory = options[:commit] ? File.join(directory, short_sha) : directory
       @ssh_options = options[:options]
       @archive = options[:file]
 
@@ -163,6 +165,10 @@ EOF
 
       def compress
         "tar -zc #{folders_to_deploy.join(' ')}"
+      end
+
+      def short_sha
+        `git rev-parse --short HEAD`
       end
 
       def archive_to_use
