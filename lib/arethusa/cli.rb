@@ -160,6 +160,7 @@ EOF
 
       # For deploy command
       def execute
+        `#{ssh} mkdir -p #{@directory}`
         `#{archive_to_use} | #{ssh} #{decompress}`
       end
 
