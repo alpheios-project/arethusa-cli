@@ -55,11 +55,15 @@ EOF
       desc: 'Minifies Arethusa before building'
     method_option :commit, aliases: '-c', type: :boolean,
       desc: 'Deploy in a subfolder, referenced by the current commit sha'
+    method_option :sudo, aliases: '-s', type: :boolean,
+      desc: 'Run ssh commands as sudo'
+    mo
     def deploy(address, directory)
       @address = address
       @directory = options[:commit] ? File.join(directory, short_sha) : directory
       @ssh_options = options[:options]
       @archive = options[:file]
+      @sudo = options[:sudo] ? 'sudo ' : ''
 
       @small = options[:small]
 
@@ -160,8 +164,8 @@ EOF
 
       # For deploy command
       def execute
-        `#{ssh} mkdir -p #{@directory}`
-        `#{archive_to_use} | #{ssh} #{decompress}`
+        `#{ssh} #{@sudo} mkdir -p #{@directory}`
+        `#{archive_to_use} | #{ssh} #{@sudo} #{decompress}`
       end
 
       def compress
