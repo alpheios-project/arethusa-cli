@@ -62,11 +62,17 @@ EOF
       @directory = options[:commit] ? File.join(directory, short_sha) : directory
       @ssh_options = options[:options]
       @archive = options[:file]
-      @sudo = options[:sudo] ? '-t sudo ' : ''
+
+      if options[:sudo]
+        @sudo = true
+        @user = @address.split('@').first
+      end
 
       @small = options[:small]
 
       minify if options[:minify] &! @archive
+
+      create_deploy_directory
       execute
       say_status(:deployed, "at #{@address} - #{@directory}")
     end
@@ -162,9 +168,15 @@ EOF
       end
 
       # For deploy command
+      def create_deploy_directory
+        if @sudo
+          `#{ssh} -t sudo mkdir -p #{@directory} && chown #{@user} directory`
+        else
+          `#{ssh} mkdir -p #{@directory}`
+        end
+      end
+
       def execute
-        puts "#{ssh} #{@sudo} mkdir -p #{@directory}"
-        `#{ssh} #{@sudo} mkdir -p #{@directory}`
         `#{archive_to_use} | #{ssh} #{decompress}`
       end
 
