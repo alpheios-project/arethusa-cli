@@ -57,7 +57,6 @@ EOF
       desc: 'Deploy in a subfolder, referenced by the current commit sha'
     method_option :sudo, aliases: '-s', type: :boolean,
       desc: 'Run ssh commands as sudo'
-    mo
     def deploy(address, directory)
       @address = address
       @directory = options[:commit] ? File.join(directory, short_sha) : directory
