@@ -170,7 +170,7 @@ EOF
       # For deploy command
       def create_deploy_directory
         if @sudo
-          `#{ssh} -t sudo mkdir -p #{@directory} && chown #{@user} directory`
+          `#{ssh} -t "sudo mkdir -p #{@directory} && chown #{@user} directory"`
         else
           `#{ssh} mkdir -p #{@directory}`
         end
