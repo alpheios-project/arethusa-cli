@@ -185,7 +185,7 @@ EOF
       end
 
       def use_deployment_helper
-        `#{ssh} -t "depl-help-deploy arethusa #{@directory} #{@environment}"`
+        `#{ssh} "bash -l -c 'depl-help-deploy arethusa #{@directory} #{@environment}'"`
       end
 
       def compress
