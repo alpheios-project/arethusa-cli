@@ -61,7 +61,7 @@ EOF
       desc: 'Run ssh commands as sudo'
     def deploy(address, directory)
       @address = address
-      @directory = options[:commit] ? File.join(directory, short_sha) : directory
+      @directory = options[:commit] ? File.join(directory, short_sha).strip : directory
       @ssh_options = options[:options]
       @archive = options[:file]
       @environment = options[:environment]
