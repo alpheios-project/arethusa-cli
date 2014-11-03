@@ -55,6 +55,8 @@ EOF
       desc: 'Minifies Arethusa before building'
     method_option :commit, aliases: '-c', type: :boolean,
       desc: 'Deploy in a subfolder, referenced by the current commit sha'
+    method_option :environment, aliases: '-e',
+      desc: 'Releases the build by calling the server-side script depl-help-deploy in a given environment. Check http://github.com/LFDM/deployment-helpers for additional documentation.'
     method_option :sudo, type: :boolean,
       desc: 'Run ssh commands as sudo'
     def deploy(address, directory)
@@ -62,6 +64,7 @@ EOF
       @directory = options[:commit] ? File.join(directory, short_sha) : directory
       @ssh_options = options[:options]
       @archive = options[:file]
+      @environment = options[:environment]
 
       if options[:sudo]
         @sudo = true
@@ -74,6 +77,7 @@ EOF
 
       create_deploy_directory
       execute
+      use_deployment_helper if @environment
       say_status(:deployed, "at #{@address} - #{@directory}")
     end
 
@@ -178,6 +182,10 @@ EOF
 
       def execute
         `#{archive_to_use} | #{ssh} #{decompress}`
+      end
+
+      def use_deployment_helper
+        `#{ssh} depl-help-deploy arethusa #{@directory} #{@environment}`
       end
 
       def compress
