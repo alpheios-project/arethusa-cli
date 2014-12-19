@@ -163,7 +163,7 @@ EOF
       end
 
       def minify
-        if system('bower install && grunt clean version ngdocs plato minify:all')
+        if system('bower install && grunt clean version minify:all ngdocs plato ')
           say_status(:success, 'minified Arethusa')
         else
           say_status(:error, 'minification failed')
