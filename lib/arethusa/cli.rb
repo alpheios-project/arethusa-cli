@@ -31,6 +31,11 @@ module Arethusa
       say_status(:built, archive_path)
     end
 
+    desc 'version', 'Outputs version info'
+    def version
+      puts Arethusa::CLI::VERSION
+    end
+
     desc 'deploy ADDRESS DIRECTORY', 'Deploys an Arethusa archive through ssh'
     long_desc <<-EOF
 Uses ssh to deploy Arethus on a remote server.
