@@ -4,10 +4,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'arethusa/cli/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "arethusa-cli"
+  spec.name          = "arethusa-client"
   spec.version       = Arethusa::CLI::VERSION
-  spec.authors       = ["LFDM"]
-  spec.email         = ["1986gh@gmail.com"]
+  spec.authors       = ["LFDM","Bridget Almas","Frederik Baumgardt"]
+  spec.email         = ["balmas@gmail.com"]
   spec.summary       = %q{Command line tools for Arethusa}
   spec.description   = spec.summary
   spec.homepage      = ""
