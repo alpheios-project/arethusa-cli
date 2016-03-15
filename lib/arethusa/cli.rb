@@ -269,8 +269,8 @@ EOF
             additional_conf = read_conf(value)
             conf.delete(key)
             if additional_conf
-              conf.merge!(additional_conf)
               traverse(additional_conf)
+              conf.merge!(additional_conf)
             end
           end
         end
